@@ -1,0 +1,6 @@
+{
+  "name": "Voice Studio AI",
+  "description": "Professional AI text-to-speech production studio powered by the Fish Audio API.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
