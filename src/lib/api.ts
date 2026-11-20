@@ -1,11 +1,4 @@
 import type {
-  AiModelOption,
-  AiProviderId,
-  AiProviderParameters,
-  AiProvidersPublicState,
-  AiProviderStatus,
-  AiTaskRouteConfig,
-  AiTaskType,
   ApiConfigStatus,
   DirectedSegmentPayload,
   GenerationParams,
@@ -307,71 +300,6 @@ export const api = {
     requestJson<{ items: VoiceModel[] }>(`/api/favorites/${encodeURIComponent(id)}`, {
       method: 'DELETE',
     }),
-
-  getAiProviders: () => requestJson<AiProvidersPublicState>('/api/ai-providers'),
-
-  updateAiRouting: (payload: {
-    defaultProvider?: AiProviderId;
-    taskRouting?: Partial<Record<AiTaskType, Partial<AiTaskRouteConfig>>>;
-  }) =>
-    requestJson<{ state: AiProvidersPublicState }>('/api/ai-providers/routing', {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-    }),
-
-  saveAiProviderConfig: (
-    provider: AiProviderId,
-    payload: {
-      apiKey?: string;
-      baseUrl?: string;
-      selectedModel?: string;
-      customModelId?: string;
-      parameters?: AiProviderParameters;
-    }
-  ) =>
-    requestJson<{ state: AiProvidersPublicState; latencyMs?: number; modelsCount?: number }>(
-      `/api/ai-providers/${encodeURIComponent(provider)}/config`,
-      {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      }
-    ),
-
-  testAiProvider: (
-    provider: AiProviderId,
-    payload?: { apiKey?: string; baseUrl?: string; customModelId?: string }
-  ) =>
-    requestJson<{
-      ok: boolean;
-      status: AiProviderStatus;
-      latencyMs: number;
-      models: AiModelOption[];
-      error?: string;
-      state: AiProvidersPublicState;
-    }>(`/api/ai-providers/${encodeURIComponent(provider)}/test`, {
-      method: 'POST',
-      body: JSON.stringify(payload || {}),
-    }),
-
-  refreshAiProviderModels: (
-    provider: AiProviderId,
-    payload?: { apiKey?: string; baseUrl?: string }
-  ) =>
-    requestJson<{ models: AiModelOption[]; state: AiProvidersPublicState }>(
-      `/api/ai-providers/${encodeURIComponent(provider)}/models`,
-      {
-        method: 'POST',
-        body: JSON.stringify(payload || {}),
-      }
-    ),
-
-  deleteAiProviderKey: (provider: AiProviderId) =>
-    requestJson<{ state: AiProvidersPublicState }>(
-      `/api/ai-providers/${encodeURIComponent(provider)}/key`,
-      {
-        method: 'DELETE',
-      }
-    ),
 };
 
 /**

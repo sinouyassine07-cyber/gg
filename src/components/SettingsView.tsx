@@ -9,14 +9,12 @@ import {
   type LatencyMode,
   type UILanguage,
 } from '../types';
-import { AiProvidersSettingsSection } from './AiProvidersSettingsSection';
 
 interface SettingsViewProps {
   uiLanguage: UILanguage;
   onChangeLanguage: (lang: UILanguage) => Promise<void>;
   defaultParams: GenerationParams;
   onSaveDefaultParams: (next: GenerationParams) => Promise<void>;
-  onProvidersChanged?: (anyConfigured: boolean) => void;
   t: TranslationDictionary;
 }
 
@@ -25,7 +23,6 @@ export function SettingsView({
   onChangeLanguage,
   defaultParams,
   onSaveDefaultParams,
-  onProvidersChanged,
   t,
 }: SettingsViewProps) {
   const [draft, setDraft] = useState<GenerationParams>(defaultParams);
@@ -62,7 +59,7 @@ export function SettingsView({
   };
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 max-w-3xl">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-white">{t.settings.title}</h1>
         <p className="text-sm text-slate-400 mt-1">{t.settings.subtitle}</p>
@@ -249,9 +246,6 @@ export function SettingsView({
           </div>
         </div>
       </section>
-
-      {/* AI Providers & API Keys for AI YouTube Studio */}
-      <AiProvidersSettingsSection t={t} onProvidersChanged={onProvidersChanged} />
     </div>
   );
 }

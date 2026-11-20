@@ -20,10 +20,6 @@ import {
   type TranscriptExtractionMode,
   type TranscriptSource,
 } from './server/transcriptEngine.ts';
-import { createAiProvidersRouter } from './server/aiProviderRoutes.ts';
-import { hasAnyAiProviderConfigured, resolveProviderCredentials } from './server/aiProviderStore.ts';
-import { createYouTubeRouter } from './server/ytRoutes.ts';
-import { resetStuckRenderJobsOnStartup } from './server/ytStorage.ts';
 
 dotenv.config();
 
@@ -423,9 +419,8 @@ function clamp(value: number, min: number, max: number): number {
 
 async function startServer() {
   await ensureDataDirs();
-  await resetStuckRenderJobsOnStartup();
   const app = express();
-  app.use(express.json({ limit: '10mb' }));
+  app.use(express.json({ limit: '2mb' }));
 
   // Health check
   app.get('/api/health', (_req, res) => {
@@ -439,19 +434,12 @@ async function startServer() {
     if (keyInfo.apiKey) {
       credit = await fetchFishCredits(keyInfo.apiKey);
     }
-    const [geminiCreds, aiProvidersConfigured] = await Promise.all([
-      resolveProviderCredentials('gemini'),
-      hasAnyAiProviderConfigured(),
-    ]);
-    const geminiConfigured = Boolean(geminiCreds.apiKey);
     res.json({
       configured: Boolean(keyInfo.apiKey),
       source: keyInfo.source,
       maskedKey: keyInfo.maskedKey,
       credit,
       updatedAt: keyInfo.updatedAt,
-      geminiConfigured,
-      aiProvidersConfigured,
     });
   });
 
@@ -1441,12 +1429,6 @@ async function startServer() {
     await writeDb(db);
     res.json({ items: db.favorites });
   });
-
-  // AI Providers & API Key Management Routes (separate from Fish Audio credentials)
-  app.use('/api/ai-providers', createAiProvidersRouter(safeClientStatus));
-
-  // AI YouTube Production Studio API Routes
-  app.use('/api/yt', createYouTubeRouter({ getEffectiveApiKey, safeClientStatus }));
 
   // JSON 404 for unmatched API routes so Vite SPA fallback never serves HTML for /api/*
   app.use('/api', (_req, res) => {

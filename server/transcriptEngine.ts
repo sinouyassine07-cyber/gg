@@ -4,7 +4,6 @@ import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { GoogleGenAI, Type } from '@google/genai';
-import { resolveProviderCredentials } from './aiProviderStore.ts';
 import type { AudioFormat } from './ttsEngine.ts';
 
 const execFileAsync = promisify(execFile);
@@ -392,13 +391,11 @@ async function transcribeWithGemini(
   totalDurationMs: number,
   tmpRootDir: string
 ): Promise<TranscriptCue[]> {
-  const creds = await resolveProviderCredentials('gemini');
-  const apiKey = creds.apiKey?.trim();
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (!apiKey || apiKey === 'MY_GEMINI_API_KEY') {
-    throw Object.assign(
-      new Error('Google Gemini API key is not configured. Configure it in Settings > AI Providers & API Keys.'),
-      { status: 400 }
-    );
+    throw Object.assign(new Error('GEMINI_API_KEY is not configured on the server.'), {
+      status: 400,
+    });
   }
 
   const ai = new GoogleGenAI({
@@ -557,8 +554,9 @@ export async function extractTranscriptForRecord(options: {
   }
 
   if (mode === 'auto') {
-    const geminiCreds = await resolveProviderCredentials('gemini');
-    const hasGeminiKey = Boolean(geminiCreds.apiKey && geminiCreds.apiKey !== 'MY_GEMINI_API_KEY');
+    const hasGeminiKey = Boolean(
+      process.env.GEMINI_API_KEY?.trim() && process.env.GEMINI_API_KEY !== 'MY_GEMINI_API_KEY'
+    );
     if (hasGeminiKey) {
       try {
         const cues = await transcribeWithGemini(filePath, format, text, totalDurationMs, tmpRootDir);

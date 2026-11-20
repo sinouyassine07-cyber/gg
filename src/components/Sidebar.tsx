@@ -1,30 +1,17 @@
 import {
-  Activity,
   AudioWaveform,
-  Captions,
   CheckCircle2,
-  Clapperboard,
-  Cpu,
-  Download,
-  FileText,
-  Film,
   History,
-  ImagePlus,
   KeyRound,
-  LayoutDashboard,
   Library,
   Mic,
-  PlusCircle,
   Settings,
   Star,
   AlertCircle,
-  Volume2,
-  Wand2,
   X,
 } from 'lucide-react';
 import type { TranslationDictionary } from '../i18n/translations';
-import { YT_TRANSLATIONS } from '../i18n/ytTranslations';
-import type { ApiConfigStatus, NavSection, UILanguage, YouTubeNavSection } from '../types';
+import type { ApiConfigStatus, NavSection } from '../types';
 
 interface SidebarProps {
   activeSection: NavSection;
@@ -34,7 +21,6 @@ interface SidebarProps {
   favoritesCount: number;
   mobileOpen: boolean;
   onCloseMobile: () => void;
-  uiLanguage: UILanguage;
   t: TranslationDictionary;
 }
 
@@ -46,11 +32,8 @@ export function Sidebar({
   favoritesCount,
   mobileOpen,
   onCloseMobile,
-  uiLanguage,
   t,
 }: SidebarProps) {
-  const yt = YT_TRANSLATIONS[uiLanguage];
-
   const navItems: {
     id: NavSection;
     label: string;
@@ -61,27 +44,8 @@ export function Sidebar({
     { id: 'library', label: t.nav.library, icon: Library },
     { id: 'history', label: t.nav.history, icon: History, count: historyCount },
     { id: 'favorites', label: t.nav.favorites, icon: Star, count: favoritesCount },
-    { id: 'ai-providers', label: t.aiProviders.sectionTitle, icon: Cpu },
     { id: 'settings', label: t.nav.settings, icon: Settings },
     { id: 'api-config', label: t.nav.apiConfig, icon: KeyRound },
-  ];
-
-  const youtubeItems: {
-    id: YouTubeNavSection;
-    label: string;
-    icon: typeof Mic;
-  }[] = [
-    { id: 'yt-dashboard', label: yt.nav['yt-dashboard'], icon: LayoutDashboard },
-    { id: 'yt-create', label: yt.nav['yt-create'], icon: PlusCircle },
-    { id: 'yt-script', label: yt.nav['yt-script'], icon: FileText },
-    { id: 'yt-voiceover', label: yt.nav['yt-voiceover'], icon: Volume2 },
-    { id: 'yt-scenes', label: yt.nav['yt-scenes'], icon: Clapperboard },
-    { id: 'yt-prompts', label: yt.nav['yt-prompts'], icon: Wand2 },
-    { id: 'yt-uploads', label: yt.nav['yt-uploads'], icon: ImagePlus },
-    { id: 'yt-subtitles', label: yt.nav['yt-subtitles'], icon: Captions },
-    { id: 'yt-editor', label: yt.nav['yt-editor'], icon: Film },
-    { id: 'yt-production', label: yt.nav['yt-production'], icon: Activity },
-    { id: 'yt-export', label: yt.nav['yt-export'], icon: Download },
   ];
 
   const handleSelect = (id: NavSection) => {
@@ -115,71 +79,35 @@ export function Sidebar({
         </button>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-4 overflow-y-auto" aria-label="Primary Navigation">
-        <div>
-          <div className="px-3 mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-            {yt.voiceStudioGroup}
-          </div>
-          <div className="space-y-0.5">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeSection === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => handleSelect(item.id)}
-                  className={`w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
-                    isActive
-                      ? 'bg-indigo-500/15 text-white border border-indigo-400/25'
-                      : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.04] border border-transparent'
-                  }`}
-                >
-                  <span className="flex items-center gap-3 min-w-0">
-                    <Icon
-                      className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-400' : 'text-slate-500'}`}
-                    />
-                    <span className="truncate">{item.label}</span>
-                  </span>
-                  {typeof item.count === 'number' && item.count > 0 && (
-                    <span className="text-xs font-mono tabular-nums text-slate-400">
-                      {item.count}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="pt-2 border-t border-white/[0.06]">
-          <div className="px-3 mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
-            {yt.moduleTitle}
-          </div>
-          <div className="space-y-0.5">
-            {youtubeItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeSection === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => handleSelect(item.id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
-                    isActive
-                      ? 'bg-indigo-500/15 text-white border border-indigo-400/25'
-                      : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.04] border border-transparent'
-                  }`}
-                >
-                  <Icon
-                    className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-400' : 'text-slate-500'}`}
-                  />
-                  <span className="truncate">{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto" aria-label="Primary Navigation">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeSection === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => handleSelect(item.id)}
+              className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
+                isActive
+                  ? 'bg-indigo-500/15 text-white border border-indigo-400/25'
+                  : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.04] border border-transparent'
+              }`}
+            >
+              <span className="flex items-center gap-3 min-w-0">
+                <Icon
+                  className={`w-4 h-4 shrink-0 ${isActive ? 'text-indigo-400' : 'text-slate-500'}`}
+                />
+                <span className="truncate">{item.label}</span>
+              </span>
+              {typeof item.count === 'number' && item.count > 0 && (
+                <span className="text-xs font-mono tabular-nums text-slate-400">
+                  {item.count}
+                </span>
+              )}
+            </button>
+          );
+        })}
       </nav>
 
       <div className="p-4 border-t border-white/[0.08]">

@@ -253,13 +253,6 @@ export function ApiConfigView({ status, onStatusUpdated, t }: ApiConfigViewProps
           </button>
         </div>
       </form>
-
-      <div className="rounded-xl border border-white/[0.08] bg-[#0c101b] px-4 py-3 text-xs text-slate-400">
-        {t.aiProviders.fishNote}{' '}
-        <span className="text-slate-200 font-medium">
-          ({t.nav.settings} &rarr; {t.aiProviders.sectionTitle})
-        </span>
-      </div>
     </div>
   );
 }

@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { Cpu, Globe, Menu } from 'lucide-react';
+import { Globe, Menu } from 'lucide-react';
 import { ApiConfigView } from './components/ApiConfigView';
-import { AiProvidersSettingsSection } from './components/AiProvidersSettingsSection';
 import { FavoritesView } from './components/FavoritesView';
 import { HistoryView } from './components/HistoryView';
 import { SettingsView } from './components/SettingsView';
 import { Sidebar } from './components/Sidebar';
 import { StudioView } from './components/StudioView';
 import { VoiceLibraryView } from './components/VoiceLibraryView';
-import { YouTubeStudioContainer } from './components/youtube/YouTubeStudioContainer';
 import { TRANSLATIONS } from './i18n/translations';
-import { YT_TRANSLATIONS } from './i18n/ytTranslations';
 import { api, ApiError } from './lib/api';
 import {
   DEFAULT_GENERATION_PARAMS,
@@ -23,7 +20,6 @@ import {
   type NavSection,
   type UILanguage,
   type VoiceModel,
-  type YouTubeNavSection,
 } from './types';
 
 export default function App() {
@@ -276,7 +272,6 @@ export default function App() {
     await api.updatePreferences({ defaultParams: next });
   };
 
-  const yt = YT_TRANSLATIONS[uiLanguage];
   const sectionTitleMap: Record<NavSection, string> = {
     studio: t.nav.studio,
     library: t.nav.library,
@@ -284,21 +279,7 @@ export default function App() {
     favorites: t.nav.favorites,
     settings: t.nav.settings,
     'api-config': t.nav.apiConfig,
-    'ai-providers': t.aiProviders.sectionTitle,
-    'yt-dashboard': yt.nav['yt-dashboard'],
-    'yt-create': yt.nav['yt-create'],
-    'yt-script': yt.nav['yt-script'],
-    'yt-voiceover': yt.nav['yt-voiceover'],
-    'yt-scenes': yt.nav['yt-scenes'],
-    'yt-prompts': yt.nav['yt-prompts'],
-    'yt-uploads': yt.nav['yt-uploads'],
-    'yt-subtitles': yt.nav['yt-subtitles'],
-    'yt-editor': yt.nav['yt-editor'],
-    'yt-production': yt.nav['yt-production'],
-    'yt-export': yt.nav['yt-export'],
   };
-
-  const isYouTubeSection = activeSection.startsWith('yt-');
 
   return (
     <div className="min-h-screen bg-[#070910] text-slate-100 flex">
@@ -310,7 +291,6 @@ export default function App() {
         favoritesCount={favorites.length}
         mobileOpen={mobileMenuOpen}
         onCloseMobile={() => setMobileMenuOpen(false)}
-        uiLanguage={uiLanguage}
         t={t}
       />
 
@@ -339,15 +319,6 @@ export default function App() {
             >
               <Globe className="w-3.5 h-3.5 text-indigo-400" />
               <span>{t.header.languageToggle}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveSection('ai-providers')}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-indigo-400/40 bg-indigo-500/15 hover:bg-indigo-500/25 text-xs font-semibold text-indigo-100 transition-colors whitespace-nowrap"
-            >
-              <Cpu className="w-3.5 h-3.5" />
-              <span>{t.aiProviders.sectionTitle}</span>
             </button>
 
             <button
@@ -442,43 +413,15 @@ export default function App() {
               onChangeLanguage={handleLanguageChange}
               defaultParams={defaultParams}
               onSaveDefaultParams={handleSaveDefaultParams}
-              onProvidersChanged={(anyConfigured) =>
-                setConfigStatus((prev) =>
-                  prev ? { ...prev, aiProvidersConfigured: anyConfigured } : prev
-                )
-              }
               t={t}
             />
           )}
 
-          {activeSection === 'ai-providers' && (
-            <div className="max-w-4xl space-y-6">
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight text-white">
-                  {t.aiProviders.sectionTitle}
-                </h1>
-                <p className="text-sm text-slate-400 mt-1">{t.aiProviders.sectionSubtitle}</p>
-              </div>
-              <AiProvidersSettingsSection
-                t={t}
-                onProvidersChanged={(anyConfigured) =>
-                  setConfigStatus((prev) =>
-                    prev ? { ...prev, aiProvidersConfigured: anyConfigured } : prev
-                  )
-                }
-              />
-            </div>
-          )}
-
-          {isYouTubeSection && (
-            <YouTubeStudioContainer
-              activeSection={activeSection as YouTubeNavSection}
-              onSelectSection={setActiveSection}
-              selectedVoice={selectedVoice}
-              favorites={favorites}
-              defaultParams={defaultParams}
-              configStatus={configStatus}
-              uiLanguage={uiLanguage}
+          {activeSection === 'api-config' && (
+            <ApiConfigView
+              status={configStatus}
+              onStatusUpdated={setConfigStatus}
+              t={t}
             />
           )}
         </main>

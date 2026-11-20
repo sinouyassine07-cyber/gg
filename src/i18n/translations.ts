@@ -237,57 +237,6 @@ export interface TranslationDictionary {
     saveSuccess: string;
     removeSuccess: string;
   };
-  aiProviders: {
-    sectionTitle: string;
-    sectionSubtitle: string;
-    securityNote: string;
-    defaultProviderLabel: string;
-    defaultProviderDesc: string;
-    routingTitle: string;
-    routingDesc: string;
-    taskScript: string;
-    taskScenes: string;
-    taskPrompts: string;
-    followDefault: string;
-    saveRouting: string;
-    routingSaved: string;
-    statusConnected: string;
-    statusInvalidKey: string;
-    statusError: string;
-    statusNotConfigured: string;
-    sourceUser: string;
-    sourceEnv: string;
-    sourceNone: string;
-    apiKeyLabel: string;
-    apiKeyPlaceholder: string;
-    apiKeyPlaceholderReplace: string;
-    baseUrlLabel: string;
-    baseUrlPlaceholder: string;
-    modelLabel: string;
-    customModelLabel: string;
-    customModelPlaceholder: string;
-    refreshModels: string;
-    temperatureLabel: string;
-    thinkingLevelLabel: string;
-    maxTokensLabel: string;
-    gemini4Note: string;
-    saveConfig: string;
-    savingConfig: string;
-    testConnection: string;
-    testingConnection: string;
-    deleteKey: string;
-    confirmDeleteKey: string;
-    cancelDelete: string;
-    lastTestLabel: string;
-    tokensUsedLabel: string;
-    estCostLabel: string;
-    requestsLabel: string;
-    neverTested: string;
-    saveSuccess: string;
-    testSuccess: string;
-    deleteSuccess: string;
-    fishNote: string;
-  };
   common: {
     dismiss: string;
     retry: string;
@@ -533,61 +482,6 @@ export const TRANSLATIONS: Record<UILanguage, TranslationDictionary> = {
       saveSuccess: 'API key verified and securely stored on the server.',
       removeSuccess: 'Saved API key removed from server keystore.',
     },
-    aiProviders: {
-      sectionTitle: 'AI Providers & API Keys',
-      sectionSubtitle:
-        'Connect Google Gemini, OpenAI, Anthropic Claude, or a custom OpenAI-compatible endpoint for AI YouTube Studio scripts, scene planning, and image prompts. Fish Audio voice synthesis remains completely separate.',
-      securityNote:
-        'All API keys are encrypted on the backend server using AES-256-GCM and are never exposed in browser JavaScript, localStorage, or public files.',
-      defaultProviderLabel: 'Default AI Provider',
-      defaultProviderDesc:
-        'Used automatically for AI YouTube Studio tasks unless overridden per stage below.',
-      routingTitle: 'Per-Task Model Selection',
-      routingDesc:
-        'Assign a dedicated provider and model for script writing, audio-synced scene planning, or image prompt generation.',
-      taskScript: 'Script Writing & Ideas',
-      taskScenes: 'Smart Scene Planning',
-      taskPrompts: 'Image Prompt Generation',
-      followDefault: 'Follow Default Provider',
-      saveRouting: 'Save Routing',
-      routingSaved: 'AI routing updated.',
-      statusConnected: 'Connected',
-      statusInvalidKey: 'Invalid Key',
-      statusError: 'Error',
-      statusNotConfigured: 'Not Configured',
-      sourceUser: 'Encrypted Server Keystore',
-      sourceEnv: 'Server Environment Variable',
-      sourceNone: 'Not Configured',
-      apiKeyLabel: 'API Key',
-      apiKeyPlaceholder: 'Enter API key...',
-      apiKeyPlaceholderReplace: 'Enter new key to replace saved key...',
-      baseUrlLabel: 'Base Endpoint URL',
-      baseUrlPlaceholder: 'https://openrouter.ai/api/v1',
-      modelLabel: 'Default Model',
-      customModelLabel: 'Custom Model ID (Optional Override)',
-      customModelPlaceholder: 'e.g. meta-llama/llama-3.3-70b-instruct',
-      refreshModels: 'Refresh Models',
-      temperatureLabel: 'Temperature',
-      thinkingLevelLabel: 'Thinking Level',
-      maxTokensLabel: 'Max Output Tokens',
-      gemini4Note: 'Gemini 4 models use Thinking Level rather than Temperature.',
-      saveConfig: 'Save Configuration',
-      savingConfig: 'Saving...',
-      testConnection: 'Test Connection',
-      testingConnection: 'Testing...',
-      deleteKey: 'Delete Key',
-      confirmDeleteKey: 'Confirm Delete',
-      cancelDelete: 'Cancel',
-      lastTestLabel: 'Last Verified',
-      tokensUsedLabel: 'Tokens Used',
-      estCostLabel: 'Est. Cost',
-      requestsLabel: 'Requests',
-      neverTested: 'Not tested yet',
-      saveSuccess: 'Configuration verified and securely encrypted on the server.',
-      testSuccess: 'Connection verified.',
-      deleteSuccess: 'Saved API key deleted from server keystore.',
-      fishNote: 'Audio voiceover & narration continue using your separate Fish Audio configuration.',
-    },
     common: {
       dismiss: 'Dismiss',
       retry: 'Retry',
@@ -830,61 +724,6 @@ export const TRANSLATIONS: Record<UILanguage, TranslationDictionary> = {
       testSuccess: 'تم التحقق من المصادقة بنجاح مع واجهة Fish Audio.',
       saveSuccess: 'تم التحقق من المفتاح وحفظه مشفراً على الخادم.',
       removeSuccess: 'تمت إزالة المفتاح المحفوظ من الخادم.',
-    },
-    aiProviders: {
-      sectionTitle: 'مزودو الذكاء الاصطناعي ومفاتيح API',
-      sectionSubtitle:
-        'اربط Google Gemini أو OpenAI أو Anthropic Claude أو نقطة نهاية متوافقة مع OpenAI لكتابة سكريبتات يوتيوب وتخطيط المشاهد وأوامر الصور. يظل Fish Audio منفصلاً تماماً لتوليد الصوت.',
-      securityNote:
-        'يتم تشفير جميع مفاتيح API على الخادم الخلفي باستخدام AES-256-GCM ولا يتم كشفها مطلقاً لمتصفح المستخدم أو تخزينها في localStorage.',
-      defaultProviderLabel: 'مزود الذكاء الاصطناعي الافتراضي',
-      defaultProviderDesc:
-        'يُستخدم تلقائياً لمهام استوديو يوتيوب ما لم يتم تخصيص مزود مختلف لكل مرحلة أدناه.',
-      routingTitle: 'تحديد النموذج حسب المهمة',
-      routingDesc:
-        'اختر مزوداً ونموذجاً مخصصاً لكتابة السكريبت أو تخطيط المشاهد أو توليد أوامر الصور.',
-      taskScript: 'كتابة السكريبت والأفكار',
-      taskScenes: 'تخطيط المشاهد الذكي',
-      taskPrompts: 'توليد أوامر الصور',
-      followDefault: 'استخدام المزود الافتراضي',
-      saveRouting: 'حفظ التوجيه',
-      routingSaved: 'تم تحديث توجيه المهام.',
-      statusConnected: 'متصل',
-      statusInvalidKey: 'مفتاح غير صالح',
-      statusError: 'خطأ',
-      statusNotConfigured: 'غير مُعد',
-      sourceUser: 'مخزن المفاتيح المشفر على الخادم',
-      sourceEnv: 'متغير بيئة الخادم',
-      sourceNone: 'لا يوجد مفتاح',
-      apiKeyLabel: 'مفتاح API',
-      apiKeyPlaceholder: 'أدخل مفتاح API...',
-      apiKeyPlaceholderReplace: 'أدخل مفتاحاً جديداً لاستبدال المفتاح المحفوظ...',
-      baseUrlLabel: 'رابط نقطة النهاية (Base URL)',
-      baseUrlPlaceholder: 'https://openrouter.ai/api/v1',
-      modelLabel: 'النموذج الافتراضي',
-      customModelLabel: 'معرّف نموذج مخصص (اختياري)',
-      customModelPlaceholder: 'مثال: meta-llama/llama-3.3-70b-instruct',
-      refreshModels: 'تحديث النماذج',
-      temperatureLabel: 'درجة التنوع (Temperature)',
-      thinkingLevelLabel: 'مستوى التفكير',
-      maxTokensLabel: 'الحد الأقصى للتوكنز',
-      gemini4Note: 'تستخدم نماذج Gemini 4 مستوى التفكير بدلاً من Temperature.',
-      saveConfig: 'حفظ الإعدادات',
-      savingConfig: 'جارٍ الحفظ...',
-      testConnection: 'اختبار الاتصال',
-      testingConnection: 'جارٍ الاختبار...',
-      deleteKey: 'حذف المفتاح',
-      confirmDeleteKey: 'تأكيد الحذف',
-      cancelDelete: 'إلغاء',
-      lastTestLabel: 'آخر تحقق',
-      tokensUsedLabel: 'التوكنز المستخدمة',
-      estCostLabel: 'التكلفة التقديرية',
-      requestsLabel: 'الطلبات',
-      neverTested: 'لم يُختبر بعد',
-      saveSuccess: 'تم التحقق من الإعدادات وحفظ المفتاح مشفراً على الخادم.',
-      testSuccess: 'تم التحقق من الاتصال بنجاح.',
-      deleteSuccess: 'تم حذف المفتاح المحفوظ من الخادم.',
-      fishNote: 'يستمر توليد التعليق الصوتي باستخدام إعدادات Fish Audio المنفصلة.',
     },
     common: {
       dismiss: 'إغلاق',

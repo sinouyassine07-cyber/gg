@@ -1,27 +1,12 @@
 export type UILanguage = 'en' | 'ar';
 
-export type YouTubeNavSection =
-  | 'yt-dashboard'
-  | 'yt-create'
-  | 'yt-script'
-  | 'yt-voiceover'
-  | 'yt-scenes'
-  | 'yt-prompts'
-  | 'yt-uploads'
-  | 'yt-subtitles'
-  | 'yt-editor'
-  | 'yt-production'
-  | 'yt-export';
-
 export type NavSection =
   | 'studio'
   | 'library'
   | 'history'
   | 'favorites'
   | 'settings'
-  | 'api-config'
-  | 'ai-providers'
-  | YouTubeNavSection;
+  | 'api-config';
 
 export type FishAudioModel = 's2.1-pro' | 's2.1-pro-free' | 's2-pro' | 's1';
 
@@ -146,72 +131,6 @@ export interface ApiConfigStatus {
   maskedKey: string | null;
   credit: number | null;
   updatedAt: string | null;
-  geminiConfigured?: boolean;
-  aiProvidersConfigured?: boolean;
-}
-
-export type AiProviderId = 'gemini' | 'openai' | 'anthropic' | 'custom';
-export type AiProviderStatus = 'connected' | 'invalid_key' | 'error' | 'not_configured';
-export type AiTaskType = 'scriptGeneration' | 'scenePlanning' | 'imagePrompts';
-export type GeminiThinkingLevel = 'LOW' | 'MEDIUM' | 'HIGH';
-
-export interface AiModelOption {
-  id: string;
-  label: string;
-  description?: string;
-  supportsTemperature: boolean;
-  supportsThinking?: boolean;
-  supportsMaxTokens: boolean;
-  contextWindow?: number;
-}
-
-export interface AiProviderParameters {
-  temperature?: number;
-  maxTokens?: number;
-  thinkingLevel?: GeminiThinkingLevel;
-}
-
-export interface AiProviderUsageStats {
-  requests: number;
-  inputTokens: number;
-  outputTokens: number;
-  totalTokens: number;
-  estimatedCostUsd: number | null;
-  lastUsedAt?: string;
-}
-
-export interface AiTaskRouteConfig {
-  useDefault: boolean;
-  provider: AiProviderId;
-  model: string;
-}
-
-export interface AiProviderSummary {
-  id: AiProviderId;
-  name: string;
-  hasSavedKey: boolean;
-  hasEffectiveKey: boolean;
-  source: 'user' | 'env' | 'none';
-  maskedKey: string | null;
-  baseUrl: string;
-  selectedModel: string;
-  customModelId: string;
-  availableModels: AiModelOption[];
-  parameters: AiProviderParameters;
-  status: AiProviderStatus;
-  lastTestedAt: string | null;
-  lastSuccessAt: string | null;
-  lastLatencyMs: number | null;
-  lastError: string | null;
-  updatedAt: string | null;
-  usage: AiProviderUsageStats;
-}
-
-export interface AiProvidersPublicState {
-  defaultProvider: AiProviderId;
-  taskRouting: Record<AiTaskType, AiTaskRouteConfig>;
-  providers: Record<AiProviderId, AiProviderSummary>;
-  anyConfigured: boolean;
 }
 
 export interface UserPreferences {
